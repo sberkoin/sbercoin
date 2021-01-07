@@ -1,0 +1,81 @@
+policy_module(sber, 1.100.1)
+
+########################################
+#
+# Declarations
+#
+
+type sber_t;
+type sber_exec_t;
+init_daemon_domain(sber_t, sber_exec_t)
+
+permissive sber_t;
+
+type sber_initrc_exec_t;
+init_script_file(sber_initrc_exec_t)
+
+type sber_conf_t;
+files_type(sber_conf_t)
+
+type sber_var_lib_t;
+files_type(sber_var_lib_t)
+
+type sber_var_run_t;
+files_type(sber_var_run_t)
+
+type sber_port_t;
+corenet_port(sber_port_t)
+
+########################################
+#
+# sber local policy
+#
+allow sber_t self:process { fork };
+
+allow sber_t self:fifo_file rw_fifo_file_perms;
+allow sber_t self:unix_stream_socket create_stream_socket_perms;
+
+manage_dirs_pattern(sber_t, sber_conf_t, sber_conf_t)
+manage_files_pattern(sber_t, sber_conf_t, sber_conf_t)
+
+manage_dirs_pattern(sber_t, sber_var_lib_t, sber_var_lib_t)
+manage_files_pattern(sber_t, sber_var_lib_t, sber_var_lib_t)
+files_var_lib_filetrans(sber_t, sber_var_lib_t, { dir file })
+
+manage_dirs_pattern(sber_t, sber_var_run_t, sber_var_run_t)
+manage_files_pattern(sber_t, sber_var_run_t, sber_var_run_t)
+
+sysnet_dns_name_resolve(sber_t)
+corenet_all_recvfrom_unlabeled(sber_t)
+
+allow sber_t self:tcp_socket create_stream_socket_perms;
+corenet_tcp_sendrecv_generic_if(sber_t)
+corenet_tcp_sendrecv_generic_node(sber_t)
+corenet_tcp_sendrecv_all_ports(sber_t)
+corenet_tcp_bind_generic_node(sber_t)
+
+gen_require(`
+    type sber_port_t;
+')
+allow sber_t sber_port_t:tcp_socket name_bind;
+
+gen_require(`
+    type sber_port_t;
+')
+allow sber_t sber_port_t:tcp_socket name_connect;
+
+domain_use_interactive_fds(sber_t)
+
+files_read_etc_files(sber_t)
+
+miscfiles_read_localization(sber_t)
+
+sysnet_dns_name_resolve(sber_t)
+
+allow sber_t sber_exec_t:file execute_no_trans;
+allow sber_t self:process setsched;
+corecmd_exec_ls(sber_t)
+corenet_tcp_connect_http_port(sber_t)
+dev_read_urand(sber_t)
+fs_getattr_xattr_fs(sber_t)
+kernel_read_system_state(sber_t)

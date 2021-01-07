@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Name=SBER Core
+Comment=SBER P2P Cryptocurrency
+Comment[fr]=SBER, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=SBER, eşten eşe kriptografik sanal para birimi
+Exec=sber-qt %u
+Terminal=false
+Type=Application
+Icon=sber128
+MimeType=x-scheme-handler/sber;
+Categories=Office;Finance;
+StartupWMClass=Sber-qt

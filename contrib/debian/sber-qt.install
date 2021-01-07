@@ -1,0 +1,6 @@
+usr/local/bin/sber-qt usr/bin
+share/pixmaps/sber32.xpm usr/share/pixmaps
+share/pixmaps/sber16.xpm usr/share/pixmaps
+share/pixmaps/sber128.png usr/share/pixmaps
+debian/sber-qt.desktop usr/share/applications
+debian/sber-qt.protocol usr/share/kde4/services/

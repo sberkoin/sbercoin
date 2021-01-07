@@ -1,0 +1,3 @@
+usr/local/bin/sberd usr/bin
+usr/local/bin/sber-cli usr/bin
+debian/examples/sber.conf etc/sber
